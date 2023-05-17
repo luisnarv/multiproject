@@ -1,0 +1,39 @@
+.container{
+
+    /* position: absolute;
+    width: auto;*/
+    height: 550px; 
+    padding: 20px;
+    
+}
+.word{
+    font-size: 1rem;
+}
+
+.addd{
+    color:rgba(10, 255, 10, 0.872);
+    animation: add 2.5s 1;
+    position: relative;
+}
+
+@keyframes add {
+    0% {
+      top: 0;
+      left: 0;
+    }
+    
+    50% {
+      top: -50px;
+      left: 200px;
+    }
+    
+    100% {
+      top: -100px;
+      left: 250px;
+      display: none;
+    }
+  }
+
+  .count {
+    animation: add 0.5s;
+  }

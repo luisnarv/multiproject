@@ -23,7 +23,6 @@ export default function Memotest() {
 if (selecionado.length === 2){
     if(selecionado[0].split("|")[1] === selecionado[1].split("|")[1] ){
         setEncontrad((encontrad)=> encontrad.concat(selecionado))
-        console.log(encontrad[1],"este es encontrad ")
         setSelecionado([])
     }else{
     setTimeout(() =>    setSelecionado([]), 1000);
