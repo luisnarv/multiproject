@@ -1,7 +1,7 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 400; 
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -12,6 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  display: flex;
 }
 
 *{
@@ -34,13 +35,16 @@ input, button{
 }
 
 body {
-
+background-image: radial-gradient(93.75% 105.88% at 0.39% 99.26%, rgb(42 39 39 / 88%) 1.42%, rgb(44 126 138 / 59%) 53.8%, rgb(4 4 4 / 13%) 100%), linear-gradient(50.24deg, rgb(129 125 125 / 32%) 14.75%, rgb(19 71 24 / 20%) 100%), url("../img/playstation-abstracto_1920x1080_xtrafondos.com.jpg");
   margin: auto;
   display: flex;
   place-items: center;
-  max-width: 800px;
+  max-width: 1300px;
   min-height: 100vh;
+  background-color: #242424;
+  padding: 10px;
 }
+
  #root{
   width: 100%;
 } 
