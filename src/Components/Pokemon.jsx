@@ -1,102 +1,104 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "./Pokemon.module.scss";
 import { PokemonData, imagenes } from "./Pokemons";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 
-
-
-
-
-
 export default function Pokemon() {
-
-    const ramdon = Math.floor(Math.random() * PokemonData.length)
-    const [Match, setMatch] = useState(ramdon);
-    const [pokeFilter, setPokefilter] = useState(false);
+    // const randomIndex = Math.floor(Math.random() * PokemonData.length)
+    //const [matchIndex, setMatchIndex] = useState(randomIndex);
+    const [matchIndex, setMatchIndex] = useState(getRandomIndex(-1, PokemonData.length));
     const [name, setName] = useState("");
-    const [Dificult, setDificult] = useState("Facil");
+    const [difficulty, setDifficulty] = useState("Facil");
+    const [Filter, setFilter] = useState(false);
     const [time, setTime] = useState(0)
-    const [enter, setleave] = useState(false);
+    const [leaveState, setLeaveState] = useState(false);
     const [count, setCount] = useState(0)
-    const Dif = ['Facil', 'Normal', "Dificil"];
+    const difficulties = ['Facil', 'Normal', "Dificil"];
+    const handleMouseEnter = () => setLeaveState(true);
+    const handleMauseLeave = () => setLeaveState(false);
 
-
-    function prueba() {
-        setPokefilter(false)
-        setMatch(ramdon)
+    function chageImage() {
+        //  setMatchIndex(randomIndex)
+        setMatchIndex((previousIndex) => getRandomIndex(previousIndex, PokemonData.length));
+        setFilter(false)
     };
 
+
+
+    function getRandomIndex(previousIndex, maxLength) {
+        let randomIndex = Math.floor(Math.random() * maxLength);
+        // Verifica si el índice generado es igual al índice anteriormente seleccionado
+        // Si es así, genera un nuevo índice hasta que sea diferente
+        while (randomIndex === previousIndex) {
+            randomIndex = Math.floor(Math.random() * maxLength);
+        }
+
+        return randomIndex;
+    }
+
+    /*--------------------------------------------------------------------------- */
+    function changeBackgorund() {
+        let currentIndex = 0;
+        const background = document.getElementById("background");
+        currentIndex = (currentIndex + 1) % imagenes.length;
+        background.style.backgroundImage = ` url(${imagenes[currentIndex]})`
+    };
+
+    /*--------------------------------------------------------------------------- */
+
+
     useEffect(() => {
-        if (Dificult === "Dificil") {
-            setTime(60)
-
-        }
-        if (Dificult === "Facil" || Dificult === "Normal") {
-            setTime(0)
-
-        }
-    }, [Dificult])
+        setTime(difficulty === "Dificil" ? 60 : 0)
+    }, [difficulty])
 
     useEffect(() => {
         if (time !== 0) {
             const timeout = setTimeout(() => setTime(time - 1), 1000)
-            return () => clearTimeout(timeout)
+            return () => clearTimeout(timeout);
+        } else {
+            const interval = setInterval(changeBackgorund, 20000);
+            return () => clearInterval(interval);
+        };
 
-        }
     }, [time])
 
-    let currentIndex = 0;
 
-    if (Dificult !== "Dificil") {
-        function changeIMG() {
-            const background = document.getElementById("background");
-            currentIndex = (currentIndex + 1) % imagenes.length;
-            background.style.backgroundImage = ` url(${imagenes[currentIndex]})`
-        };
-        setInterval(changeIMG, 20000);
-    }
-
-    function reset(v) {
-        setMatch(ramdon);
-        setDificult(v);
+    function handleReset() {
+        //setMatchIndex(randomIndex);
+        setMatchIndex((previousIndex) => getRandomIndex(previousIndex, PokemonData.length));
         setCount(0);
         setName("");
-
     }
 
     function handleSubmit(e) {
         e.preventDefault()
-        // console.log(PokemonData[Match - 1].name.toLocaleLowerCase())
-        if (name.toLocaleLowerCase() === PokemonData[Match - 1].name.toLocaleLowerCase()) {
-            setPokefilter(true);
+        console.log(PokemonData[matchIndex - 1].name.toLocaleLowerCase())
+        if (name.toLocaleLowerCase() === PokemonData[matchIndex - 1].name.toLocaleLowerCase() || name.toLocaleLowerCase() === "nidoran") {
             setName("");
             setCount(() => setCount(count + 1));
-            setTimeout(prueba, 5000);
-            if (Dificult === "Dificil") {
-                changeIMG()
+            setTimeout(chageImage, 3000);
+            setFilter(true)
+            if (difficulty === "Dificil") {
+                changeBackgorund();
             }
-        } else { setName("") }
+        } else { setName("") };
     };
 
-    //setInterval(changeIMG, 10000);
-    function hanldemouseEnter() { setleave(true) }
-    function handlemauseLeave() { setleave(false) }
 
     return (
         <div className={style.principal}>
             <div>
                 <img style={{ width: "300px", }} src="../../img/pokemon/3.png" alt="" />
             </div>
-
             <div>
                 <Autocomplete
                     id="disabled-options-demo"
-                    options={Dif}
-                    value={Dificult}
-                    sx={{ width: 150, margin: "10px", height: "50px", backgroundColor: "#ffffff99", borderRadius: "5px" }}
-                    onChange={(e, v) => { reset(v) }}
+                    options={difficulties}
+                    value={difficulty}
+                    sx={{ width: 250, margin: "10px", height: "50px", backgroundColor: "#ffffff99", borderRadius: "5px" }}
+                    onChange={(e, v) => { setDifficulty(v), handleReset(v) }}
                     renderInput={(params) => <TextField
                         {...params} label="Dificultad"
                     />}
@@ -109,38 +111,37 @@ export default function Pokemon() {
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center" }} >
-                    <div>  <img
-                        style={{
-                            position: "relative", padding: "10px",
-                            width: "400px", filter: pokeFilter ? "none" : "brightness(0) invert(1)"
-                        }}
-                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${Match}.png`}
-                        alt="" />
+                    <div>  <img className={style.pokemon} style={{ filter: Filter && "none" }}
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${matchIndex}.png`}
+                        alt="pokemon.png" />
                     </div>
 
                     <div style={{ position: "relative", display: "inline-block" }} >
                         <img style={{ width: "200px" }}
                             src="../../img/pokemon/4.png" alt="Pista"
-                            onMouseEnter={hanldemouseEnter}
-                            onMouseLeave={handlemauseLeave}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMauseLeave}
                         />
-                        {Dificult !== "Dificil" && <div style={{ backgroundColor: " blue", borderRadius: "5px  " }} >
+                        {difficulty !== "Dificil" && <div className={style.info} >
                             <p>Pokemons encontrados: {count}</p>
                         </div>}
 
-                        {Dificult === "Facil" && enter ?
-                            (<div className={style.info} >
-                                <p>Pokemon tipo: {PokemonData[Match - 1].type}</p>
-                                <p>Caracteres: {PokemonData[Match - 1].name.length}</p>
-                            </div>
-                            ) : Dificult === "Normal" && enter ?
-                                (<div className={style.info} >
-                                    <p>Pokemon tipo: {PokemonData[Match - 1].type}</p>
+                        {difficulty === "Facil" && leaveState ?
+                            (
+                                <div className={style.info} >
+                                    <p>Pokemon tipo: {PokemonData[matchIndex - 1].type}</p>
+                                    <p>Caracteres: {PokemonData[matchIndex - 1].name.length}</p>
                                 </div>
-                                ) : Dificult === "Dificil" ?
+                            ) : difficulty === "Normal" && leaveState ?
+                                (<div className={style.info} >
+                                    <p>Pokemon tipo: {PokemonData[matchIndex - 1].type}</p>
+                                </div>
+                                ) : difficulty === "Dificil" ?
                                     (time !== 0 ? (
                                         <div>
-                                            <p>Time: {time}</p>
+                                            <p style={{
+                                                color: "black", padding: "3px", borderRadius: "8px", background: time <= 15 ? "firebrick" : time <= 30 ? "yellow" : "#28c228d1",
+                                            }} id="tiempo"  >Time: {time}</p>
                                         </div>)
                                         : (<div
                                             style={{
@@ -148,20 +149,13 @@ export default function Pokemon() {
                                                 alignItems: "center"
                                             }}
                                         >
-                                            <div
-                                                style={{
-                                                    transform: "translateX(-50%)", backgroundColor: "#000",
-                                                    color: "#FFF", padding: "5px", opacity: "1",
-                                                    transition: " opacity 0.3s ease", width: "200px"
-                                                }}
-                                                 >
+                                            <div className={style.info} >
                                                 <div>
                                                     <h1>Se acabo el tiempo {time.toUpperCase}</h1>
                                                     <h3> Pokemons encontrados: {count} </h3>
                                                 </div>
                                             </div>
                                         </div>
-
                                         )
                                     ) : ""
                         }
@@ -169,17 +163,10 @@ export default function Pokemon() {
                 </div>
 
                 <div>
-                    <form style={{
-                        display: "flex", justifyContent: "space-evenly", alignItems: "center",
-                        flexDirection: "row", position: "absolute"
-                    }}
-                        onSubmit={handleSubmit} action=""
-                    >
-                        <input
-                            // style={{ backgroundImage:"../../img/pokemon/1.png", width: "50%", height: "60px", borderRadius:"5px"  }} 
-                            value={name}
-                            className={style.inputt} onChange={(e) => setName(e.target.value)} type="text" />
-                        <button style={{ height: "50px", fontSize: "1rem " }}
+                    <form onSubmit={handleSubmit} action="" >
+                        <input value={name} className={style.inputt}
+                            onChange={(e) => setName(e.target.value)} type="text" />
+                        <button style={{ height: "50px", fontSize: "1rem ", cursor: "pointer" }}
                             type="Submit"  > Pokemon</button>
                     </form>
                 </div>

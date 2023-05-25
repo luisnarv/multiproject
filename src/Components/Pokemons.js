@@ -27,7 +27,7 @@ export const PokemonData = [
     { name: "Raichu", type: "Electric" },
     { name: "Sandshrew", type: "Ground" },
     { name: "Sandslash", type: "Ground" },
-    { name: "Nidoran♀", type: "Poison" },
+     { name: "Nidoran♀", type: "Poison" },
     { name: "Nidorina", type: "Poison" },
     { name: "Nidoqueen", type: "Poison/Ground" },
     { name: "Nidoran♂", type: "Poison" },
