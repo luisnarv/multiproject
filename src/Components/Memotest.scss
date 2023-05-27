@@ -1,0 +1,49 @@
+
+ul{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+}
+
+li{
+   margin: 0.6rem;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    
+}
+.marco{
+    background: linear-gradient(212deg, #3f5599c9, #784f7bf7, #19a6b7);
+    display: flex;
+    align-items: center;
+    width: 600px;
+    border-radius: 15px;
+ 
+}
+
+.formulario {
+ position: initial;
+ display: flex;
+ flex-direction: column;
+ margin-top: 25px;
+ bottom: 0px;
+    
+}
+
+.help{
+    background: black;
+    padding: 10px;
+    width: 0px;
+    position: absolute;
+display: none;
+}
+
+.nohelp{
+    background: black;
+    padding: 10px;
+    width: 300px;
+    position: absolute;
+}
+
