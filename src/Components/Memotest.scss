@@ -1,49 +1,174 @@
-
-ul{
+ul {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row-reverse;
 }
 
-li{
-   margin: 0.6rem;
+img {
+    overflow: "hidden"
 }
 
-.container{
+li {
+    margin: 0.6rem;
+}
+
+#myInput {
+    border-radius: 5px;
+    border: none;
+    padding: 10px   ;
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 50px;
+}
+
+::placeholder {
+    color: rgba(0, 0, 255, 0.294);
+    font-size: 1.0rem;
+    padding: 10px;
+}
+
+.labe {
+    position: relative;
+    left: 40px;
+    top: 30px;
+    color:  rgb(4 4 4 / 58%);
+    font-size: 1rem;
+}
+
+
+@keyframes myAnimationOpen {
+    0% {
+        
+        background-color: #ffffff82;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    100% {
+        left: 40px;
+        color: rgb(17 16 16);
+        background-color: #ffffff82;
+        border-radius: 5px;
+        top: 10px;
+    }
+}
+
+@keyframes animationclose {
+    0% {
+        left: 40px;
+        background-color: #ffffff82;
+        top: 10px;
+    }
+    100% {
+        background-color: none;
+        top: 30px
+    }
+}
+
+.animateClose {
+    animation: animationclose 1s ease-in-out alternate both;
+
+}
+
+
+.animateOpen{
+    animation: myAnimationOpen 1s ease-in-out   alternate both;
+}
+
+#divin:hover {
+   
+
+    #myinput {
+        //top: -30px;
+        color: #19a6b7;
+    }
+
+    ::placeholder {
+        color: rgba(218, 11, 11, 0.294);
+        font-size: 1.0rem;
+        padding: 10px;
+    }
+
+}
+
+
+
+
+
+
+button {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.container {
     display: flex;
     flex-direction: column;
-    
+    align-items: center;
 }
-.marco{
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.marco {
     background: linear-gradient(212deg, #3f5599c9, #784f7bf7, #19a6b7);
     display: flex;
     align-items: center;
     width: 600px;
     border-radius: 15px;
- 
+
 }
 
 .formulario {
- position: initial;
- display: flex;
- flex-direction: column;
- margin-top: 25px;
- bottom: 0px;
-    
+    position: initial;
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    bottom: 0px;
+
 }
 
-.help{
+.nohelp {
     background: black;
     padding: 10px;
     width: 0px;
     position: absolute;
-display: none;
+    display: none;
 }
 
-.nohelp{
+.help {
     background: black;
     padding: 10px;
     width: 300px;
     position: absolute;
 }
 
+.image {
+    max-width: 495px;
+    width: 800px;
+    max-height: 400px;
+    margin: 0px 0 50px 0;
+    overflow: overlay;
+}
+
+.lista {
+    list-style-type: none;
+    width: 104px;
+    object-fit: cover;
+    overflow: hidden;
+    max-height: 102px;
+    border: #e1e1e1 solid 2px;
+    position: relative;
+    border-radius: 5px;
+}
+
+.close {
+    width: 19px;
+    border: none;
+    font-size: 0px;
+    background: red;
+    border-radius: 50px;
+    position: absolute;
+
+}
