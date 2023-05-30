@@ -1,39 +1,81 @@
-.container{
-
-    /* position: absolute;
-    width: auto;*/
-    height: 550px; 
-    padding: 20px;
-    
-}
-.word{
-    font-size: 1rem;
+.container {
+  /* height: 550px;  */
+  padding: 20px;
 }
 
-.addd{
-    color:rgba(10, 255, 10, 0.872);
-    animation: add 2.5s 1;
-    position: relative;
+.form {
+  position: relative;
+  bottom: 0px;
+
+  /* font-size: 5rem; */
+  margin-top: 150px;
+  text-align: start;
+  /* display: initial; */
+
+}
+
+.container input {
+
+  margin: 2px;
+  border-radius: 5px;
+  padding: 10px;
+  width: 200px;
+  font-size: 20px;
+}
+
+.data {
+  display: flex;
+  margin: 5px;
+  margin-bottom: 17px;
+  text-align: center;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+h2 {
+  border: solid 2px;
+  padding: 7px;
+  margin: 11px;
+  border-radius: 5px;
+}
+
+h5 {
+  border: solid 2px;
+  padding: 14px;
+  margin: 12px;
+  border-radius: 5px;
+}
+
+
+
+.word {
+  font-size: 1rem;
+}
+
+.addd {
+  color: rgba(10, 255, 10, 0.872);
+  animation: add 2.5s 1;
+  position: relative;
 }
 
 @keyframes add {
-    0% {
-      top: 0;
-      left: 0;
-    }
-    
-    50% {
-      top: -50px;
-      left: 200px;
-    }
-    
-    100% {
-      top: -100px;
-      left: 250px;
-      display: none;
-    }
+  0% {
+    top: 0;
+    left: 0;
   }
 
-  .count {
-    animation: add 0.5s;
+  50% {
+    top: -50px;
+    left: 200px;
   }
+
+  100% {
+    top: -100px;
+    left: 250px;
+    display: none;
+  }
+}
+
+.count {
+  animation: add 0.5s;
+}

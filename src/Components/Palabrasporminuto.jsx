@@ -4,95 +4,103 @@ import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import style from "./Palabrasporminuto.module.css"
+import style from "./palabrasporminuto.module.css"
+import { Wordsss } from "./Palabras";
 
 
 
-const Words = [
-    "abacus",
-    "abdomen",
-    "abdominal",
-    "abide",
-    "ability",
-    "Orbitar",
-    "Agujero negro",
-    "Superstición",
-    "Remitente",
-    "Niño",
-    "Hoy"
+export default function Wordsbrasporminuto() {
+    const [Foundword, setFoundword] = useState();
+    const [Inputs, setInputs] = useState({
+        longitud: "",
+        count: "",
+        word: "",
+    });
+    const [Caracterount, setCaracterount] = useState(0);
+    const [time, setTime] = useState(0);
+    const [Words, setWords] = useState([""]);
 
-]
-
-
-
-export default function Palabrasporminuto() {
-    const [word, setWord] = useState(() => Words[(Math.random() * Words.length) | 0]);
-    const [caractercount, setCaractercount] = useState(0)
-    const [input, setInput] = useState("")
-    const [time, setTime] = useState(0)
-
+    //console.log(Words.length, "esto es Wordsbras nuwveasd")
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (input === word) {
-            setWord(Words[(Math.random() * Words.length) | 0]);
-            setCaractercount((caractercount) => caractercount + word.length);
+        if (Inputs.word === Foundword) {
+            setWords(() => Words.filter(e => e !== Foundword))
+            setFoundword(() => Words[(Math.random() * Words.length) | 0]);
+            setCaracterount((Caracterount) => Caracterount + Foundword.length);
             const timeout = setTimeout(() => setTime(time + 5), 1000)
-            setInput("")
+            setInputs({ word: "" });
             return () => clearTimeout(timeout)
 
-        } else if (input !== word) {
+        } else if (Inputs.word !== Foundword) {
             const timeout = setTimeout(() => setTime(time - 10), 1000)
-            setInput("");
+            setInputs({ word: "" });
             return () => clearTimeout(timeout)
 
         }
     }
 
     useEffect(() => {
+        if (Words.length === 0 && time !== 0) {
+            alert("You win ¡¡");
+            location.reload()
+
+        }
         if (time !== 0) {
             const timeout = setTimeout(() => setTime(time - 1), 1000)
             return () => clearTimeout(timeout)
         }
+
     }, [time])
 
 
-    function reset(e) {
+    async function reset(e) {
         e.preventDefault()
         setTime(60)
-        setInput("")
-        setCaractercount(0)
+        setInputs("")
+        setCaracterount(0)
+        const result = await Wordsss(Inputs.count, Inputs.longitud)
+        setWords(result)
+        setFoundword(() => result[(Math.random() * result.length) | 0])
     }
 
 
 
     return (
         <div className={style.container}>
-            {Boolean(time) && <h1 style={{ fontSize: "50px", }}>{word}</h1>}
-            <h3>Contador: {caractercount}</h3>
-            <p className={style.word} >+1</p>
-            <h5  >Time: {time}</h5>
-
+                   {Boolean(time) && <h1>{Foundword}</h1>}
+           
+            <div className={style.data}>
+                <h2>Contador: {Caracterount}</h2>
+                <h5>Time: {time}</h5>
+            </div>
             {time === 0 ? (
-                <Stack direction="row" spacing={2}>
-                    <Button
-                        style={{ borderRadius: "5px", border: " solid", width: "100%", margin: "20px" }}
-                        onClick={reset}
-                        variant="outlined">Play</Button>
-                </Stack>
+                <form className={style.form} action="submit">
+                    <input value={Inputs.count} name="count" onChange={(e) => setInputs({ ...Inputs, [e.target.name]: e.target.value })} type="number" placeholder="Cantidad de Palabras" />
+                    <input value={Inputs.longitud} name="longitud" onChange={(e) => setInputs({ ...Inputs, [e.target.name]: e.target.value })} type="number" placeholder="Cantidad de caracteres" />
+                    <Stack direction="row" spacing={2}>
+                        <Button
+                            style={{ borderRadius: "5px", border: " solid", width: "100%", margin: "20px" }}
+                            onClick={reset}
+                            variant="outlined">Play</Button>
+                    </Stack>
+                </form>
+
             ) : (
                 <Box
-                    style={{ display: "flex" }} action="" onSubmit={handleSubmit}
+                className={style.form}
+                   // style={{ display: "flex",position:"relative"  }}
+                     action="" onSubmit={handleSubmit}
                     component="form"
                     sx={{
-                        '& > :not(style)': { m: 1, width: '100ch' },
+                        '& > :not(style)': { m: 1.5, width: '50ch', },
                     }}
                     noValidate
                     autoComplete="off"
                 >
-                    <TextField autoFocus type="text" value={input} onChange={(e) => setInput(e.target.value)} style={{ backgroundColor: "white", padding: "10px", borderRadius: "2px" }} id="standard-basic" label="Standard" variant="standard" />
+                    <TextField autoFocus type="text" value={Inputs.word} name="word" onChange={(e) => setInputs({ ...Inputs, [e.target.name]: e.target.value })}  id="standard-basic" label="Standard" variant="standard" />
 
-                    <Button style={{ width: "200px" }} type="submit"  variant="contained" endIcon={<AddIcon />}> </Button>
+                    <Button style={{ width: "200px" }} type="submit" variant="contained" endIcon={<AddIcon />}> </Button>
                 </Box>
             )}
 

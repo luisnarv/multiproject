@@ -93,7 +93,7 @@ export default function Memotest() {
 
     const help = (
         <div>
-            <p>Para ingresar imágenes debes agregar 15 URL de imágenes, busca las imágenes de tu preferencia en Google has click derecho en la imagen, dar click en abrir imagen en una nueva ventana, puedes copiar la URL que te muestra en la parte de arriba.</p>
+            <p>Para ingresar imágenes debes agregar 15 URL de imágenes, busca las imágenes de tu preferencia en Google has click derecho en la imagen, dar click en abrir imagen en una nueva ventana, puedes copiar la URL que te muestra en la parte superior.</p>
             <hr />
             <br />
             <hr />
@@ -168,7 +168,7 @@ export default function Memotest() {
                             <div id="divin">
                                 <label id="addima" className="labe" >Add Image</label>
                                 {Imageload.length >= 15 ? <input id="myInput" value={Input} type="text" onInput={(event) => handleInputChange(event)} onChange={(e) => setInput(e.target.value)} aria-describedby="Ingresar imagen" placeholder="Ingresar imagen" disabled /> :
-                                    <input id="myInput" value={Input} type="text" onInput={(event) => handleInputChange(event)} onChange={(e) => setInput(e.target.value)} aria-describedby="Ingresar imagen" placeholder="Ingresar imagen" />}
+                                    <input id="myInput" value={Input} type="text" onInput={(event) => handleInputChange(event)} onChange={(e) => setInput(e.target.value)} placeholder="Ingresar URL de imagen" />}
                             </div>
                             {Imageload.length >= 15 ? <button type="submit" disabled>Ingresar</button>
                                 : <button type="submit">Ingresar</button>}
