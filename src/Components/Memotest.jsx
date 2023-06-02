@@ -168,7 +168,7 @@ export default function Memotest() {
                             <div id="divin">
                                 <label id="addima" className="labe" >Add Image</label>
                                 {Imageload.length >= 15 ? <input id="myInput" value={Input} type="text" onInput={(event) => handleInputChange(event)} onChange={(e) => setInput(e.target.value)} aria-describedby="Ingresar imagen" placeholder="Ingresar imagen" disabled /> :
-                                    <input id="myInput" value={Input} type="text" onInput={(event) => handleInputChange(event)} onChange={(e) => setInput(e.target.value)} placeholder="Ingresar URL de imagen" />}
+                                    <input id="myInput" value={Input} type="url" onInput={(event) => handleInputChange(event)} onChange={(e) => setInput(e.target.value)} placeholder="Ingresar URL de imagen" />}
                             </div>
                             {Imageload.length >= 15 ? <button type="submit" disabled>Ingresar</button>
                                 : <button type="submit">Ingresar</button>}

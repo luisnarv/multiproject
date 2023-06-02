@@ -26,7 +26,7 @@ export default function Pokemon() {
     const [time, setTime] = useState(0)
     const [leaveState, setLeaveState] = useState(false);
     const [count, setCount] = useState(0)
-    const difficulties = ['Facil', 'Normal', "Dificil"];
+    const difficulties = [ "Dificil", "Normal",'Facil'];
     const handleMouseEnter = () => setLeaveState(true);
     const handleMauseLeave = () => setLeaveState(false);
 
@@ -73,10 +73,12 @@ export default function Pokemon() {
 
 
 
-    function handleReset() {
+    function handleReset(e) {
+        setDifficulty(e);
+        if(e !== null){
         setMatchIndex(randomIndex);
         setCount(0);
-        setName("");
+        setName("");}
     }
 
     function handleSubmit(e) {
@@ -105,9 +107,9 @@ export default function Pokemon() {
                     id="disabled-options-demo"
                     options={difficulties}
                     value={difficulty}
-                    sx={{ width: 250, margin: "10px", height: "50px", backgroundColor: "#ffffff99", borderRadius: "5px" }}
-                    onChange={(e, v) => { setDifficulty(v), handleReset(v) }}
-                    renderInput={(params) => <TextField
+                    sx={{ width: 300, backgroundColor: "#ffffff99", borderRadius: "5px" }}
+                    onChange={(e, v) => { handleReset(v) }}
+                    renderInput={(params) => <TextField style={{width:"300px"}}
                         {...params} label="Dificultad"
                     />}
                 />
